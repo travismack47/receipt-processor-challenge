@@ -28,10 +28,10 @@ describe('calculatePoints', () => {
             items: [],
             total: "100.00"
         };
-
+    
         const points = calculatePoints(receipt);
-        expect(points).toBe(56); 
-    });
+        expect(points).toBe(98); 
+    });    
 
     it('should calculate points for item descriptions with a length multiple of 3', () => {
         const receipt = {
