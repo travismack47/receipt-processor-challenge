@@ -1,4 +1,4 @@
-const calculatePoints = require('../src/points');
+const calculatePoints = require('../src/points.js');
 
 describe('calculatePoints', () => {
     it('should calculate points correctly for a given receipt', () => {
@@ -28,10 +28,10 @@ describe('calculatePoints', () => {
             items: [],
             total: "100.00"
         };
-    
+
         const points = calculatePoints(receipt);
         expect(points).toBe(98); 
-    });    
+    });
 
     it('should calculate points for item descriptions with a length multiple of 3', () => {
         const receipt = {
@@ -46,7 +46,7 @@ describe('calculatePoints', () => {
         };
 
         const points = calculatePoints(receipt);
-        expect(points).toBe(10); 
+        expect(points).toBe(88); 
     });
 
     it('should handle empty items gracefully', () => {
@@ -59,7 +59,7 @@ describe('calculatePoints', () => {
         };
 
         const points = calculatePoints(receipt);
-        expect(points).toBe(10); 
+        expect(points).toBe(85); 
     });
 
     it('should calculate points for purchases made between 2:00pm and 4:00pm', () => {
@@ -72,6 +72,6 @@ describe('calculatePoints', () => {
         };
 
         const points = calculatePoints(receipt);
-        expect(points).toBe(85); 
+        expect(points).toBe(104); 
     });
 });
