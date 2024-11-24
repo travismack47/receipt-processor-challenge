@@ -1,3 +1,7 @@
+# Running This Program
+
+In my solution, I used JavaScript and Node.js. Upon cloning the repository onto your local machine, you will need to run "npm install" to get all dependencies installed. To start the server, you will need to run "npm start". To run any written tests, you will need to run "npm test". After starting the server, open up a route testing tool such as Postman, and use the route "localhost:3000/receipts/process" to POST a receipt. Select the "body" option, then "raw", then post the raw JSON example into the input field. Upon sending the payload, you will get back a response with an ID. After you get the ID from the response, you will switch the request to a GET request, and change the URL to "localhost:3000/receipts/:id/points". Replace the ":id" in the URL to the actual ID received from the previous request, and switch the body to "none". After sending that request, you should get a response with the number of points on that specific receipt. 
+
 # Receipt Processor
 
 Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided 
