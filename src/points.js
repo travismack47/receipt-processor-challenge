@@ -26,10 +26,10 @@ function calculatePoints(receipt) {
 
     const [hour, minute] = receipt.purchaseTime.split(':').map(Number);
     const timeInMinutes = hour * 60 + minute;
-    const after2PM = 14 * 60;
-    const before4PM = 16 * 60; 
+    const twoPMInMinutes = 14 * 60;
+    const fourPMInMinutes = 16 * 60; 
 
-    if (timeInMinutes > after2PM && timeInMinutes < before4PM) {
+    if (timeInMinutes > twoPMInMinutes && timeInMinutes < fourPMInMinutes) {
         points += 10;
     }
     return points;
