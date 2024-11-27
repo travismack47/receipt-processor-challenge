@@ -8,6 +8,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(express.json());
 app.use(morgan("combined"));
@@ -15,8 +16,7 @@ app.use(helmet());
 
 const PORT = process.env.PORT || 3000;
 
-const maxGlobalRequests = 100;
-const maxReceiptRequests = 100;
+const maxGlobalRequests = 1000;
 
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -25,6 +25,8 @@ const globalLimiter = rateLimit({
 });
 
 app.use(globalLimiter);
+
+const maxReceiptRequests = 20;
 
 const receiptLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,

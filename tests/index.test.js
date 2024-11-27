@@ -171,10 +171,11 @@ describe("Receipt Processor API", () => {
         items: [{ shortDescription: "Item", price: "1.00" }],
         total: "1.00",
       };
-
+  
       const promises = [];
-
-      for (let i = 0; i < 20; i++) {
+  
+      // Make 30 requests to exceed the limit of 20
+      for (let i = 0; i < 30; i++) {
         promises.push(
           request(app)
             .post("/receipts/process")
@@ -182,20 +183,21 @@ describe("Receipt Processor API", () => {
             .send(receipt)
         );
       }
-
+  
       const responses = await Promise.all(promises);
-
+  
       const successfulRequests = responses.filter(
         (response) => response.statusCode === 200
       ).length;
       const tooManyRequestsCount = responses.filter(
         (response) => response.statusCode === 429
       ).length;
-
-      expect(successfulRequests).toBe(maxReceiptRequests);
-      expect(tooManyRequestsCount).toBe(20 - maxReceiptRequests);
+  
+      expect(successfulRequests).toBe(maxReceiptRequests); // Should be 20
+      expect(tooManyRequestsCount).toBe(30 - maxReceiptRequests); // Should be 10
+      maxReceiptRequests = 0;
     });
-
+  
     it("should handle multiple concurrent requests and enforce rate limits", async () => {
       const receipt = {
         retailer: "Concurrent Test",
@@ -204,10 +206,10 @@ describe("Receipt Processor API", () => {
         items: [{ shortDescription: "Item", price: "1.00" }],
         total: "1.00",
       };
-
+  
       const promises = [];
-
-      for (let i = 0; i < 20; i++) {
+  
+      for (let i = 0; i < 30; i++) {
         promises.push(
           request(app)
             .post("/receipts/process")
@@ -215,9 +217,9 @@ describe("Receipt Processor API", () => {
             .send(receipt)
         );
       }
-
+  
       const responses = await Promise.all(promises);
-
+  
       responses.forEach((response, index) => {
         if (index < maxReceiptRequests) {
           expect(response.statusCode).toBe(200);
@@ -226,6 +228,7 @@ describe("Receipt Processor API", () => {
           expect(response.statusCode).toBe(429);
         }
       });
+      maxReceiptRequests = 0;
     });
   });
 });
